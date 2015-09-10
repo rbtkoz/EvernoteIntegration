@@ -1,0 +1,30 @@
+.ebookbtn {
+    float: right;
+    border: 1px solid black;
+    margin-top: 10px;
+    background: none;
+    outline: none !important;
+}
+
+.evernotebtn{
+  width:20%;
+  border:1px black solid;
+  border-radius: 5px;
+  padding-left: 5px;
+  margin-top:5px;
+
+
+  .evernotedesc{
+  padding-top:20px;
+  color:black;
+
+  }
+
+  .evernotelogo{
+    margin-left: 10px;
+    background-color: #259d4f;
+    width: auto;
+    max-height:30px;
+  }
+
+}
