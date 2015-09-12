@@ -1,6 +1,8 @@
 /**
- * Created by alex.kozovski on 9/9/15.
+ * Created by alex.kozovski on 9/11/15.
  */
+'use strict'
+
 app.config(function ($stateProvider) {
     $stateProvider.state('ebook', {
         url: '/ebook',

@@ -1,13 +1,16 @@
 
-<a href="/auth/evernote">
-<div class="evernotebtn">
-
-        <span class ="evernotedesc">Login with</span>
-        <img class ="evernotelogo" src ="https://sandbox.evernote.com/redesign/global/img/evernote-logo@2x.png">
-
+<div ng-show="!user.evernote">
+    {{user}}
+    <a href ="auth/evernote" >
+        <div  class="evernotebtn">
+            <span class ="evernotedesc">Login with</span>
+            <img class ="evernotelogo" src ="https://sandbox.evernote.com/redesign/global/img/evernote-logo@2x.png">
+        </div>
+    </a>
 </div>
-</a>
 
+<div ng-click="findNotes(notebook.guid)" ng-repeat="notebook in notebooks">{{notebook}}</div>
+<div>{{notes}}</div>
 <div id="manuscript" data-chapter-number="1">
     <div data-type="section" data-block_type="chaptersummary" id="siegler4e-ch01-section-35" level="1" data-print_page="36">
         <h2 class="section-title"><span data-type="title" data-title-for="siegler4e-ch01-section-35">chapter summary:</span></h2>
