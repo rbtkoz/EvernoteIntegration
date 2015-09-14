@@ -1,6 +1,6 @@
 
-<div ng-show="!user.evernote">
-    {{user}}
+<div ng-show="!isLoggedIn()">
+
     <a href ="auth/evernote" >
         <div  class="evernotebtn">
             <span class ="evernotedesc">Login with</span>
@@ -8,9 +8,30 @@
         </div>
     </a>
 </div>
+{{active}}
+<div class ="notebook">
+    <h1 class ="notebooktitle" ng-show="isLoggedIn()">My notebooks</h1>
+    <a href="#">
+        <div ng-repeat="notebook in notebooks">
+            <div ng-class="{active : check == $index}" ng-click="findNotes(notebook.guid); checkFn($index)">
+                <div class ="eachnotebook">{{notebook.name}}</div>
+            </div>
+        </div>
+    </a>
+</div>
 
-<div ng-click="findNotes(notebook.guid)" ng-repeat="notebook in notebooks">{{notebook}}</div>
-<div>{{notes}}</div>
+
+<div class ="noteblock">
+    <h3 class ="notestitle" ng-show="isLoggedIn()"></h3>
+    <div class ="notes">{{notes.note}}</div>
+    <span class ="created">{{notes.date}}</span>
+</div>
+<div class ="notesbrdr"></div>
+<div class ="selection" ng-get-selection="name" ng-model="name">{{name}}</div>
+<button ng-show="isLoggedIn()" class ="btn btn-sync" ng-click="syncText(name)">Sync!</button>
+
+
+<div contentEditable="true" class ="ebookarea" name="Text1">
 <div id="manuscript" data-chapter-number="1">
     <div data-type="section" data-block_type="chaptersummary" id="siegler4e-ch01-section-35" level="1" data-print_page="36">
         <h2 class="section-title"><span data-type="title" data-title-for="siegler4e-ch01-section-35">chapter summary:</span></h2>
@@ -54,3 +75,4 @@
             <li>It is vital for researchers to adhere to high ethical standards. Among the most important ethical principles are striving to ensure that the research does not harm children physically or psychologically; obtaining informed consent from parents and, where possible, from children; preserving participants’ anonymity; and correcting any inaccurate impressions that children form during the study.</li>
         </ul>
     </div>
+</div>

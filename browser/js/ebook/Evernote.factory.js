@@ -21,15 +21,21 @@ app.factory('EvernoteFactory',function($http) {
 
 
     function getNotes(id){
-        console.log(id, "getting ide in factory");
         return $http.get('note/'+id).then(function(response){
+            return response.data;
+        })
+    }
+
+    function updateNote(id, title, text){
+        return $http.get('update/',{params:{"id":id,"text":text, "title":title}}).then(function(response){
             return response.data;
         })
     }
 
     return {
         getNotebooks: getNotebooks,
-        getNotes: getNotes
+        getNotes: getNotes,
+        updateNote: updateNote
     }
 
 });
