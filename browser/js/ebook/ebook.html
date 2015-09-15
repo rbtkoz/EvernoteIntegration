@@ -12,7 +12,7 @@
 <div class ="notebook">
     <h1 class ="notebooktitle" ng-show="isLoggedIn()">My notebooks</h1>
     <a href="#">
-        <div ng-repeat="notebook in notebooks">
+        <div ng-repeat="notebook in notebooks" ng-show="!$first">
             <div ng-class="{active : check == $index}" ng-click="findNotes(notebook.guid); checkFn($index)">
                 <div class ="eachnotebook">{{notebook.name}}</div>
             </div>
@@ -22,13 +22,16 @@
 
 
 <div class ="noteblock">
-    <h3 class ="notestitle" ng-show="isLoggedIn()"></h3>
+    <h3 class ="notestitle" ng-show="isLoggedIn()">Title: {{notes.title}}</h3>
+
     <div class ="notes">{{notes.note}}</div>
     <span class ="created">{{notes.date}}</span>
 </div>
 <div class ="notesbrdr"></div>
 <div class ="selection" ng-get-selection="name" ng-model="name">{{name}}</div>
 <button ng-show="isLoggedIn()" class ="btn btn-sync" ng-click="syncText(name)">Sync!</button>
+<button ng-show="isLoggedIn()" class ="btn btn-sync" ng-click="syncText(name)">My Notes</button>
+
 
 
 <div contentEditable="true" class ="ebookarea" name="Text1">

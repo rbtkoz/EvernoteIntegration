@@ -12,12 +12,19 @@
 
 
         <div ng-show="user" class="welcome">
-            <span>Welcome, {{ user.email }}!</span>
+
+
+
             <a class="btn logout-button" ng-click="logout()">Logout</a>
 
         </div>
+        <button ui-sref="ebook" class="btn login-button ebookbtn">New</button>
+        <button ui-sref="ebook" class="btn login-button ebookbtn">Delete</button>
         <button ui-sref="ebook" class="btn login-button ebookbtn">Ebook</button>
 
 
+
+
     </div>
+    <span class ="userid">{{user.evernote.id}}</span>
 </nav>

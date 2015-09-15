@@ -1,11 +1,13 @@
- 'use strict'
+'use strict'
 var passport = require('passport');
 var EvernoteStrategy = require('passport-evernote').Strategy;
 var mongoose = require('mongoose');
 var UserModel = mongoose.model('User');
 var Evernote = require('evernote').Evernote;
- var crypto = require('crypto');
+var crypto = require('crypto');
 var notebooks;
+var parseString = require('xml2js').parseString;
+var xml2js = require('xml2js');
 module.exports = function(app){
 
 
@@ -48,8 +50,24 @@ module.exports = function(app){
     },
 
 
-            function(token, tokenSecret, profile,edam_noteStoreUrl, done) {
-            // asynchronous verification, for effect...
+            function(token, tokenSecret, profile, edam_noteStoreUrl, done) {
+
+
+                //attempt to get username
+               //app.get(function(req,res){
+               //
+               //     var client = new Evernote.Client({token: tokenSecret});
+               //     //console.log(client);
+               //     var userStore = client.getUserStore();
+               //     userStore.getPublicUserinfo(function(err, usr){
+               //
+               //         console.log(usr, "user")l
+               //     })
+               //
+               // });
+
+
+
             UserModel.findOne({ 'evernote.id': profile.edam_userId }).exec()
                 .then(function (user) {
 
@@ -103,7 +121,7 @@ module.exports = function(app){
         //console.log(client);
         var noteStore = client.getNoteStore();
         noteStore.listNotebooks(function (err, notebooks) {
-            //console.log(notebooks, "notebooks");
+            console.log(notebooks, "notebooks");
             res.json(notebooks);
         });
 
@@ -140,9 +158,9 @@ module.exports = function(app){
                     var datecreated = "created on " + time + ' '+d;
                     //console.log( formattedTime, "formattedtime");
 
-                    noteStore.getNoteSearchText(noteArr[0].guid,true, true, function(err, note){
+                    noteStore.getNoteContent(noteArr[0].guid, function(err, note){
                         console.log(note);
-                        res.json({note :note, date: datecreated, title: noteArr[0].title, guid: noteArr[0].guid});
+                        res.json({note : note, date: datecreated, title: noteArr[0].title, guid: noteArr[0].guid});
                     });
                 }
             });
@@ -150,56 +168,117 @@ module.exports = function(app){
 
         getNote();
     })
-    //var counter =0;
-    app.get("/update/", function(req, res){
+
+
+
+    app.get("/update/", function(req, res) {
 
         var client = new Evernote.Client({token: req.user.evernote.token});
         var noteStore = client.getNoteStore();
-        var newNote = new Evernote.Note;
-        console.log(req.query.id, req.query.text, req.query.title,"payload");
+        //console.log(req, "req");
+        //
+        //var old_id = req.query.id
+        //if(!req.query.id){
+        //    req.query.id = old_id;
+        //}
 
-        var md5 = crypto.createHash('md5');
-        var hashHex = md5.digest('hex');
+        noteStore.getNote(req.query.id, true, false, false, false, function (err, note) {
+            console.log(note, "update note");
+            var noteObj = note;
+            var updateNotecontent = note.content;
 
-        // The content of an Evernote note is represented using Evernote Markup Language
-        // (ENML). The full ENML specification can be found in the Evernote API Overview
-        // at http://dev.evernote.com/documentation/cloud/chapters/ENML.php
-        newNote.content = '<?xml version="1.0" encoding="UTF-8"?>';
-        newNote.content += '<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">';
+            parseString(updateNotecontent, function (err, result) {
 
-        newNote.guid = req.query.id;
-        newNote.title = req.query.title;
-
-        //if(counter === 0){
-            newNote.content += '<en-note>';
-            newNote.content += '<div>'+req.query.text+'</div>';
-            newNote.content += '</en-note>';
-        //}else{
-            //newNote.content +='<div>'+req.query.text+'</div>';
-       // }
-
-
-        console.log(newNote, "nrenote");
-        //noteStore.getNote(req.query.id, true, true, true, true, function(err, update){
-        //    console.log(update.content, 'hello');
-        //    res.json(update.content);
-        //})
-        //counter ++;
+                //console.dir(JSON.stringify(result), "result");
+                result['en-note'] += req.query.text;
+                //console.dir(JSON.stringify(result), "appended");
+                var builder = new xml2js.Builder();
+                //console.log(builder, "before")
+                builder.options.doctype = {sysID:'http://xml.evernote.com/pub/enml2.dtd'};
+                builder.options.xmldec.standalone = null;
+                //console.log(builder, "after")
 
 
-        noteStore.updateNote(newNote, function(err, update){
-            console.log(update,"hello");
-            //res.json(update);
-            //var updatedNoteid = update.guid;
-            noteStore.getNoteSearchText(req.query.id,true, true, function(err, note){
-                console.log(note);
-                res.json({note :note});
+
+                //var root = require('xmlbuilder').create('xbel',
+                //    { version: '1.0', encoding: 'UTF-8'},
+                //    { pubID: '+//IDN python.org//DTD XML Bookmark Exchange Language 1.0//EN//XML',
+                //        sysID: 'http://www.python.org/topics/xml/dtds/xbel-1.0.dtd'
+                //    }
+                //);
+                //The resulting XML will be:
+                //
+                //    <?xml version="1.0" encoding="UTF-8"?>
+                //<!DOCTYPE xbel PUBLIC "+//IDN python.org//DTD XML Bookmark Exchange Language 1.0//EN//XML"
+                //"http://www.python.org/topics/xml/dtds/xbel-1.0.dtd">
+                //<xbel/>
+
+                var updatedXMLcontent = builder.buildObject(result);
+                updatedXMLcontent.toString();
+                console.log(updatedXMLcontent, 'xmldcongdo');
+
+
+                //
+                //noteObj.content = updatedXMLcontent;
+                //noteObj.contentLength = updatedXMLcontent.length;
+                // noteObj.contentHash = null;
+                //console.log(noteObj, "NOTEOBJ");
+                //
+                var client = new Evernote.Client({token: req.user.evernote.token});
+                var noteStore = client.getNoteStore();
+                var newNote = new Evernote.Note;
+                newNote.guid = req.query.id;
+                newNote.title = req.query.title;
+                newNote.content = updatedXMLcontent;
+                //noteObj.content = updatedXMLcontent;
+                    noteStore.updateNote(newNote, function(err, update){
+                        console.log(update, "updates")
+                        var updatedNoteTitle = update.title;
+
+                        noteStore.getNoteContent(req.query.id, function(err, note){
+                            console.log(note);
+                                 res.json({note:note, title:updatedNoteTitle, guid:req.query.id})
+                                });
+
+                    })
+
             });
 
-        });
+
+            //var client = new Evernote.Client({token: req.user.evernote.token});
+            //var noteStore = client.getNoteStore();
+            //var newNote = new Evernote.Note;
+            //console.log(req.query.id, req.query.text, req.query.title,"payload");
+            //var md5 = crypto.createHash('md5');
+            //var hashHex = md5.digest('hex');
+            //// The content of an Evernote note is represented using Evernote Markup Language
+            //// (ENML). The full ENML specification can be found in the Evernote API Overview
+            //// at http://dev.evernote.com/documentation/cloud/chapters/ENML.php
+            //newNote.guid = req.query.id;
+            //newNote.title = req.query.title;
+            //
+            //    newNote.content = '<?xml version="1.0" encoding="UTF-8"?>';
+            //    newNote.content += '<!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">';
+            //    newNote.content += '<en-note>';
+            //    //newNote.content += '<div class ='+ '"' + counter + '"' + '>'+req.query.text+'</div>';
+            //    newNote.content += req.query.text;
+            //    newNote.content += '</en-note>';
+            //counter ++;
 
 
+            //noteStore.updateNote(updateNotecontent, function(err, update){
+            //
+            //    noteStore.getNoteSearchText(req.query.id,true, true, function(err, note){
+            //        console.log(note);
+            //        res.json({note :note});
+            //    });
+            //
+            //});
+            //    });
+            //});
 
+
+        })
     })
 };
 

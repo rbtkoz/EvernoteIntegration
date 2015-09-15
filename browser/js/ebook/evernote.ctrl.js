@@ -29,8 +29,15 @@ app.controller('EvernoteCtrl',function($scope, EvernoteFactory,AuthService, AUTH
     };
 
     $scope.syncText = function (searchText) {
+        console.log($scope.notes.guid, "notesguid");
+
+
         EvernoteFactory.updateNote($scope.notes.guid, $scope.notes.title, searchText).then(function(note){
+
+            note.note = reXML(note.note);
             $scope.notes =note;
+
+            console.log(note, "synctext");
         });
         //console.log(searchText);
         //console.log($scope.check);
@@ -46,9 +53,20 @@ app.controller('EvernoteCtrl',function($scope, EvernoteFactory,AuthService, AUTH
     $scope.findNotes = function(id) {
 
         EvernoteFactory.getNotes(id).then(function(notes){
-            console.log(notes);
-            $scope.notes = notes;
+            //console.log(notes);
+
+            notes.note = reXML(notes.note);
+            $scope.notes =notes;
         })
+    };
+
+    function reXML(data){
+
+        var xmlmatch = /<en-note>([^<]+?)<\/en-note>/igm;
+
+        var parsed =xmlmatch.exec(data);
+        console.log(parsed);
+        return parsed[1];
     };
 
 

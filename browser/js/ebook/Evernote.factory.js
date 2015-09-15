@@ -27,7 +27,11 @@ app.factory('EvernoteFactory',function($http) {
     }
 
     function updateNote(id, title, text){
+
+
         return $http.get('update/',{params:{"id":id,"text":text, "title":title}}).then(function(response){
+            console.log(response, "factory")
+
             return response.data;
         })
     }
