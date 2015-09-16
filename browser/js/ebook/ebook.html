@@ -8,12 +8,14 @@
         </div>
     </a>
 </div>
+
 {{active}}
+
 <div class ="notebook">
     <h1 class ="notebooktitle" ng-show="isLoggedIn()">My notebooks</h1>
     <a href="#">
         <div ng-repeat="notebook in notebooks" ng-show="!$first">
-            <div ng-class="{active : check == $index}" ng-click="findNotes(notebook.guid); checkFn($index)">
+            <div ng-class="{active : check == $index}"  ng-click="findNotes(notebook.guid); checkFn($index)">
                 <div class ="eachnotebook">{{notebook.name}}</div>
             </div>
         </div>
@@ -30,52 +32,54 @@
 <div class ="notesbrdr"></div>
 <div class ="selection" ng-get-selection="name" ng-model="name">{{name}}</div>
 <button ng-show="isLoggedIn()" class ="btn btn-sync" ng-click="syncText(name)">Sync!</button>
-<button ng-show="isLoggedIn()" class ="btn btn-sync" ng-click="syncText(name)">My Notes</button>
+<button ng-show="isLoggedIn()" ng-class ="selected" class ="btn btn-split" ng-click="toSplit()">My Notes</button>
 
+<my-notes ng-class ="showNotes"></my-notes>
 
-
-<div contentEditable="true" class ="ebookarea" name="Text1">
-<div id="manuscript" data-chapter-number="1">
-    <div data-type="section" data-block_type="chaptersummary" id="siegler4e-ch01-section-35" level="1" data-print_page="36">
-        <h2 class="section-title"><span data-type="title" data-title-for="siegler4e-ch01-section-35">chapter summary:</span></h2>
-        <p id="siegler4e-ch01-p-263"><span data-block_type="subhead">Why Study Child Development?</span></p>
-        <ul id="siegler4e-ch01-list-17">
-            <li>Learning about child development is valuable for many reasons: it can help us become better parents, inform our views about social issues that affect children, and improve our understanding of human nature.</li>
-        </ul>
-        <p id="siegler4e-ch01-p-264"><span data-block_type="subhead">Historical Foundations of the Study of Child Development</span></p>
-        <ul id="siegler4e-ch01-list-18">
-            <li>Great thinkers such as Plato, Aristotle, Locke, and Rousseau raised basic questions about child development and proposed interesting hypotheses about them, but they lacked the scientific methods to answer them. Early scientific approaches, such as those of Freud and Watson, began the movement toward modern research-based theories of child development.</li>
-        </ul>
-        <p id="siegler4e-ch01-p-265"><span data-block_type="subhead">Enduring Themes in Child Development</span></p>
-        <ul id="siegler4e-ch01-list-19">
-            <li>The field of child development is an attempt to answer a set of fundamental questions:<br><ol id="siegler4e-ch01-list-20">
-                <li>How do nature and nurture together shape development?</li>
-                <li>How do children shape their own development?</li>
-                <li>In what ways is development continuous, and in what ways is it discontinuous?</li>
-                <li>How does change occur?</li>
-                <li>How does the sociocultural context influence development?</li>
-                <li>How do children become so different from one another?</li>
-                <li>How can research promote children’s well-being?</li>
-            </ol>
-            </li>
-            <li>Every aspect of development, from the most specific behavior to the most general trait, reflects both people’s biological endowment (their nature) and the experiences that they have had (their nurture).</li>
-            <li>Even infants and young children actively contribute to their own development through their attentional patterns, use of language, and choices of activities.</li>
-            <li>Many developments can appear either continuous or discontinuous, depending on how often and how closely we look at them.</li>
-            <li>The mechanisms that produce developmental changes involve a complex interplay among experiences, genes, and brain structures and activities.</li>
-            <li>The contexts that shape development include the people with whom children interact directly, such as family and friends; the institutions in which they participate, such as schools and religious organizations; and societal beliefs and values, such as those related to race, ethnicity, and social class.</li>
-            <li>Individual differences, even among siblings, reflect differences in children’s genes, in their treatment by other people, in their interpretations of their own experiences, and in their choices of environments.</li>
-            <li>Principles, findings, and methods from child-development research are being applied to improve the quality of children’s lives.</li>
-        </ul>
-        <p id="siegler4e-ch01-p-266"><span data-block_type="subhead">Methods for Studying Child Development</span></p>
-        <ul id="siegler4e-ch01-list-21">
-            <li>The scientific method has made possible great advances in understanding children. It involves choosing a question, formulating a hypothesis relevant to the question, developing a method to test the hypothesis, and using data to decide whether the hypothesis is correct.</li>
-            <li>For a measure to be useful, it must be directly relevant to the hypotheses being tested, reliable, and valid. Reliability means that independent observations of a given behavior are consistent. Validity means that a measure assesses what it is intended to measure.</li>
-            <li>Among the main situations used to gather data about children are interviews, naturalistic observation, and structured observation. Interviews are especially useful for revealing children’s subjective experience. Naturalistic observation is particularly useful when the primary goal is to describe how children behave in their everyday environments. Structured observation is most useful when the main goal is to describe how different children react to the identical situation.</li>
-            <li>Correlation does not imply causation. The two differ in that correlations indicate the degree to which two variables are associated, whereas causation indicates that changing the value of one variable will change the value of the other.</li>
-            <li>Correlational designs are especially useful when the goal is to describe relations among variables or when the variables of interest cannot be manipulated because of technical or practical considerations.</li>
-            <li>Experimental designs are especially valuable for revealing the causes of children’s behavior.</li>
-            <li>Data about development can be obtained through cross-sectional designs (examining different children of different ages), through longitudinal designs (examining the same children at different ages), or through microgenetic designs (presenting the same children repeated relevant experiences over a relatively short period and analyzing the change process in detail).</li>
-            <li>It is vital for researchers to adhere to high ethical standards. Among the most important ethical principles are striving to ensure that the research does not harm children physically or psychologically; obtaining informed consent from parents and, where possible, from children; preserving participants’ anonymity; and correcting any inaccurate impressions that children form during the study.</li>
-        </ul>
+<div contentEditable="true" ng-class ="split" class ="ebookarea" name="Text1">
+    <div id="manuscript" data-chapter-number="1">
+        <div data-type="section" data-block_type="chaptersummary" id="siegler4e-ch01-section-35" level="1" data-print_page="36">
+            <h2 class="section-title"><span data-type="title" data-title-for="siegler4e-ch01-section-35">chapter summary:</span></h2>
+            <p id="siegler4e-ch01-p-263"><span data-block_type="subhead">Why Study Child Development?</span></p>
+            <ul id="siegler4e-ch01-list-17">
+                <li>Learning about child development is valuable for many reasons: it can help us become better parents, inform our views about social issues that affect children, and improve our understanding of human nature.</li>
+            </ul>
+            <p id="siegler4e-ch01-p-264"><span data-block_type="subhead">Historical Foundations of the Study of Child Development</span></p>
+            <ul id="siegler4e-ch01-list-18">
+                <li>Great thinkers such as Plato, Aristotle, Locke, and Rousseau raised basic questions about child development and proposed interesting hypotheses about them, but they lacked the scientific methods to answer them. Early scientific approaches, such as those of Freud and Watson, began the movement toward modern research-based theories of child development.</li>
+            </ul>
+            <p id="siegler4e-ch01-p-265"><span data-block_type="subhead">Enduring Themes in Child Development</span></p>
+            <ul id="siegler4e-ch01-list-19">
+                <li>The field of child development is an attempt to answer a set of fundamental questions:<br><ol id="siegler4e-ch01-list-20">
+                    <li>How do nature and nurture together shape development?</li>
+                    <li>How do children shape their own development?</li>
+                    <li>In what ways is development continuous, and in what ways is it discontinuous?</li>
+                    <li>How does change occur?</li>
+                    <li>How does the sociocultural context influence development?</li>
+                    <li>How do children become so different from one another?</li>
+                    <li>How can research promote children’s well-being?</li>
+                </ol>
+                </li>
+                <li>Every aspect of development, from the most specific behavior to the most general trait, reflects both people’s biological endowment (their nature) and the experiences that they have had (their nurture).</li>
+                <li>Even infants and young children actively contribute to their own development through their attentional patterns, use of language, and choices of activities.</li>
+                <li>Many developments can appear either continuous or discontinuous, depending on how often and how closely we look at them.</li>
+                <li>The mechanisms that produce developmental changes involve a complex interplay among experiences, genes, and brain structures and activities.</li>
+                <li>The contexts that shape development include the people with whom children interact directly, such as family and friends; the institutions in which they participate, such as schools and religious organizations; and societal beliefs and values, such as those related to race, ethnicity, and social class.</li>
+                <li>Individual differences, even among siblings, reflect differences in children’s genes, in their treatment by other people, in their interpretations of their own experiences, and in their choices of environments.</li>
+                <li>Principles, findings, and methods from child-development research are being applied to improve the quality of children’s lives.</li>
+            </ul>
+            <p id="siegler4e-ch01-p-266"><span data-block_type="subhead">Methods for Studying Child Development</span></p>
+            <ul id="siegler4e-ch01-list-21">
+                <li>The scientific method has made possible great advances in understanding children. It involves choosing a question, formulating a hypothesis relevant to the question, developing a method to test the hypothesis, and using data to decide whether the hypothesis is correct.</li>
+                <li>For a measure to be useful, it must be directly relevant to the hypotheses being tested, reliable, and valid. Reliability means that independent observations of a given behavior are consistent. Validity means that a measure assesses what it is intended to measure.</li>
+                <li>Among the main situations used to gather data about children are interviews, naturalistic observation, and structured observation. Interviews are especially useful for revealing children’s subjective experience. Naturalistic observation is particularly useful when the primary goal is to describe how children behave in their everyday environments. Structured observation is most useful when the main goal is to describe how different children react to the identical situation.</li>
+                <li>Correlation does not imply causation. The two differ in that correlations indicate the degree to which two variables are associated, whereas causation indicates that changing the value of one variable will change the value of the other.</li>
+                <li>Correlational designs are especially useful when the goal is to describe relations among variables or when the variables of interest cannot be manipulated because of technical or practical considerations.</li>
+                <li>Experimental designs are especially valuable for revealing the causes of children’s behavior.</li>
+                <li>Data about development can be obtained through cross-sectional designs (examining different children of different ages), through longitudinal designs (examining the same children at different ages), or through microgenetic designs (presenting the same children repeated relevant experiences over a relatively short period and analyzing the change process in detail).</li>
+                <li>It is vital for researchers to adhere to high ethical standards. Among the most important ethical principles are striving to ensure that the research does not harm children physically or psychologically; obtaining informed consent from parents and, where possible, from children; preserving participants’ anonymity; and correcting any inaccurate impressions that children form during the study.</li>
+            </ul>
+        </div>
     </div>
 </div>
+

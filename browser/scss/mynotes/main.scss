@@ -1,0 +1,23 @@
+.notetitle{
+  text-align:center;
+  font-size:1.6em;
+  color:darkslategrey;
+
+}
+
+.notebody{
+  padding-left:20px;
+  height:1000px;
+  width:100%;
+  background-color: lightgrey;
+  margin-left: 20px;
+  padding-top: 10px;
+  border-radius: 5px;
+  font-size:1.3em;
+  color:dodgerblue;
+
+}
+
+.notebody:focus{
+  outline: 0px solid transparent;
+}

@@ -8,6 +8,62 @@
     outline: none !important;
 }
 
+.btn-split{
+
+  background: none;
+  border: 1px solid black;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+mynotes{
+  padding-left:20px;
+
+
+
+}
+
+.notshownotes{
+  display:none;
+}
+
+.shownotes{
+  width:50%;
+  height: 100%;
+  float:right;
+  border-radius:5px;
+}
+
+
+.btn-split:focus{
+  border: 1px solid blue;
+}
+
+.selected{
+  background:rgba(125,125,125,0.3);
+
+}
+
+.split{
+  width: 50%;
+
+
+  li{
+    padding-right:30px;
+    text-align: justify;
+    text-justify: inter-word;
+  }
+
+
+}
+
+.notsplit{
+  width:100%;
+  -webkit-transition: .5s; /* Safari */
+  transition: .5s;
+  transition-timing-function: ease-out;
+}
 .userid{
   margin-top: -60px;
   padding-right: 10px;
@@ -16,7 +72,6 @@
 
 }
 .ebookarea {
-  width:100%;
   height:1000px;
 }
 
