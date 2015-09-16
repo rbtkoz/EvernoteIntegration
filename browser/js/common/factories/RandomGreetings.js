@@ -9,10 +9,10 @@ app.factory('RandomGreetings', function () {
         'At long last, I live!',
         'Hello, simple human.',
         'What a beautiful day!',
-        'I\'m like any other project, except that I am yours. :)',
-        'This empty string is for Lindsay Levine.',
+        'Ebooks need friends too :)',
+        'I like to take notes with my ebook',
         'こんにちは、ユーザー様。',
-        'Welcome. To. WEBSITE.',
+        'I can haz evernote integration.',
         ':D',
         'Yes, I think we\'ve met before.'
     ];
