@@ -6,7 +6,7 @@ app.factory('RandomGreetings', function () {
 
     var greetings = [
         'Hello, world!',
-        'At long last, I live!',
+        'At long last, I'm live!',
         'Hello, simple human.',
         'What a beautiful day!',
         'Ebooks need friends too :)',
