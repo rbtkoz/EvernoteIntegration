@@ -70,19 +70,28 @@ app.controller('EvernoteCtrl',function($scope, EvernoteFactory,AuthService, AUTH
     //find the notes based on id, run through regex and return.
     $scope.findNotes = function(id) {
         EvernoteFactory.getNotes(id).then(function(notes){
-            //console.log(notes);
+            console.log(notes, "notes");
             notes.note = reXML(notes.note);
+            console.log(notes, "notesssssss");
             $scope.notes =notes;
         })
     };
 
     //parse the xml coming from request, extract the text using regex.
     function reXML(data){
-
-        var xmlmatch = /<en-note>([^<]+?)<\/en-note>/igm;
-        var parsed =xmlmatch.exec(data);
-        console.log(parsed);
-        return parsed[1];
+        //return data;
+        //console.log(data, "typeofdata!")
+        //var xmlmatch = /<div>([^<]+?)<\/div>/igm;
+        var xmlmatch = /<en-note>(.*?)<\/en-note>/igm;
+        var xmlmatch2 = /(<en-note><div>|<\/div><\/en-note>)/igm;
+        var xmlmatch3 = /(])\s*([^<]*)/igm;
+        //var parsed = xmlmatch.exec(data);
+        console.log(xmlmatch, "xmlmatch");
+        var parsed =data.match(xmlmatch3)[0].substring(1);
+        //var parsed2 = parsed[0].replace(xmlmatch2,"");
+        console.log(parsed[0].substring(1), "PARSED");
+        return parsed;
+        //return data[0];
     };
 
 });
