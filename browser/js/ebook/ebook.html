@@ -12,7 +12,7 @@
 {{active}}
 
 <div class ="notebook">
-    <h1 class ="notebooktitle" ng-show="isLoggedIn()">My notebooks</h1>
+    <h1 class ="notebooktitle" ng-show="isLoggedIn()">My Evernote Notebooks</h1>
     <a href="#">
         <div ng-repeat="notebook in notebooks" ng-show="!$first">
             <div ng-class="{active : check == $index}"  ng-click="findNotes(notebook.guid); checkFn($index)">
@@ -24,7 +24,7 @@
 
 
 <div class ="noteblock">
-    <h3 class ="notestitle" ng-show="isLoggedIn()">Title: {{notes.title}}</h3>
+    <h3 class ="notestitle" ng-show="isLoggedIn()">{{notes.title}}</h3>
 
     <div class ="notes">{{notes.note}}</div>
     <span class ="created">{{notes.date}}</span>

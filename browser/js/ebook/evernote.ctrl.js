@@ -86,11 +86,12 @@ app.controller('EvernoteCtrl',function($scope, EvernoteFactory,AuthService, AUTH
         var xmlmatch2 = /(<en-note><div>|<\/div><\/en-note>)/igm;
         var xmlmatch3 = /(])\s*([^<]*)/igm;
         //var parsed = xmlmatch.exec(data);
-        console.log(xmlmatch, "xmlmatch");
+        //console.log(xmlmatch, "xmlmatch");
         var parsed =data.match(xmlmatch3)[0].substring(1);
         //var parsed2 = parsed[0].replace(xmlmatch2,"");
-        console.log(parsed[0].substring(1), "PARSED");
+        console.log(parsed[0].substring(2), "PARSED");
         return parsed;
+        //return data;
         //return data[0];
     };
 
